@@ -3,7 +3,7 @@ apiVersion: helm.integrations.flux.weave.works/v1alpha2
 kind: FluxHelmRelease
 metadata:
   name: angular
-  namespace: dev
+  namespace: default
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.angularReservationUI: glob:2.0.*
@@ -11,7 +11,7 @@ spec:
   chartGitPath: angular
   releaseName: angular
   values:
-    environment: dev
+    environment: default
 
     angularReservationUI:
       replicaCount: 1
