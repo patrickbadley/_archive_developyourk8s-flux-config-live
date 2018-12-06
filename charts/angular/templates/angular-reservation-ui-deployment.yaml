@@ -22,3 +22,5 @@ spec:
           env:
           - name: APP_ENVIRONMENT
             value: {{ .Values.environment }}
+      imagePullSecrets:
+      - name: azure-reg-creds
