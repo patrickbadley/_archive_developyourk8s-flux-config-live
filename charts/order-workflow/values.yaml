@@ -1,0 +1,7 @@
+# Default values for application.
+environment: dev
+angularReservationUI:
+  appName: angular-reservation-ui
+  image: <from-release>
+  port: 4200
+  type: LoadBalancer

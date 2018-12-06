@@ -1,0 +1,18 @@
+---
+apiVersion: helm.integrations.flux.weave.works/v1alpha2
+kind: FluxHelmRelease
+metadata:
+  name: angular
+  namespace: dev
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.angularReservationUI: glob:2.0.*
+spec:
+  chartGitPath: angular
+  releaseName: angular
+  values:
+    environment: dev
+
+    angularReservationUI:
+      replicaCount: 1
+      image: bmwreferencerepository.azurecr.io/angular-reservation-ui:2.0.184

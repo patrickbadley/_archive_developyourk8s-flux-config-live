@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Values.angularReservationUI.appName }}
+  labels:
+    app: {{ .Values.angularReservationUI.appName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.angularReservationUI.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.angularReservationUI.appName }}
+    spec:
+      containers:
+        - name: {{ .Values.angularReservationUI.appName }}
+          image: "{{ .Values.angularReservationUI.image }}"
+          ports:
+          - containerPort: {{ .Values.angularReservationUI.port | default 80 }}
+          env:
+          - name: APP_ENVIRONMENT
+            value: {{ .Values.environment }}
