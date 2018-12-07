@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.angular.appName }}
-          image: {{ print .Values.angular.image.repository ":" .Values.angular.image.tag }}
+          image: {{ .Values.angular.image }}
           ports:
           - containerPort: {{ .Values.angular.port | default 80 }}
           env:

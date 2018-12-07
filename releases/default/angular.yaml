@@ -17,12 +17,8 @@ spec:
 
     angular:
       replicaCount: 1
-      image:
-        repository: bmwreferencerepository.azurecr.io/angular-reservation-ui
-        tag: 2.0.184
+      image: bmwreferencerepository.azurecr.io/angular-reservation-ui:2.0.184
 
     api:
       replicaCount: 1
-      image:
-        repository: bmwreferencerepository.azurecr.io/angular-reservation-ui
-        tag: 2.0.184
+      image: bmwreferencerepository.azurecr.io/angular-reservation-ui:2.0.184

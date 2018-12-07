@@ -2,16 +2,12 @@
 environment: dev
 angular:
   appName: angular-ui
-  image: 
-    repository: <from release>
-    tag: <from release>
+  image: <from-release>
   port: 4200
   type: LoadBalancer
 
 api:
   appName: api
-  image:
-    repository: <from release>
-    tag: <from release>
+  image: <from-release>
   port: 80
   type: LoadBalancer
