@@ -6,7 +6,8 @@ metadata:
   namespace: default
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.angularReservationUI: glob:2.0.*
+    flux.weave.works/tag.angular: glob:2.0.*
+    flux.weave.works/tag.api: glob:2.0.*
 spec:
   chart:
     git: git@github.com:patrickbadley/simple-flux.git
