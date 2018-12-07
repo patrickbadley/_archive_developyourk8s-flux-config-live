@@ -9,6 +9,7 @@ metadata:
     flux.weave.works/tag.angularReservationUI: glob:2.0.*
 spec:
   chart:
+    git: git@github.com:patrickbadley/simple-flux.git
     path: charts/angular
   releaseName: angular
   values:
