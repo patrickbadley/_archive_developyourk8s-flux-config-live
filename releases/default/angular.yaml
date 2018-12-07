@@ -22,4 +22,4 @@ spec:
 
     api:
       replicaCount: 1
-      image: bmwreferencerepository.azurecr.io/fluxtestapi:1.0.0
+      image: bmwreferencerepository.azurecr.io/fluxtestapi:1.0.1
