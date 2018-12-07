@@ -7,7 +7,7 @@ metadata:
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.angular: glob:2.0.*
-    flux.weave.works/tag.api: glob:2.0.*
+    flux.weave.works/tag.api: glob:1.0.*
 spec:
   chart:
     git: git@github.com:patrickbadley/simple-flux.git
@@ -22,4 +22,4 @@ spec:
 
     api:
       replicaCount: 1
-      image: bmwreferencerepository.azurecr.io/angular-reservation-ui:2.0.184
+      image: bmwreferencerepository.azurecr.io/fluxtestapi:1.0.0
