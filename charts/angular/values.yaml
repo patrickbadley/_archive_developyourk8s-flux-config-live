@@ -9,7 +9,7 @@ angular:
 api:
   appName: api
   image: <from-release>
-  port: 80
+  port: 5001
   type: ClusterIP
 
 ingress:
