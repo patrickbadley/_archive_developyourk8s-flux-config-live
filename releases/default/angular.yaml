@@ -15,7 +15,13 @@ spec:
   values:
     environment: default
 
-    angularReservationUI:
+    angular:
+      replicaCount: 1
+      image:
+        repository: bmwreferencerepository.azurecr.io/angular-reservation-ui
+        tag: 2.0.184
+
+    api:
       replicaCount: 1
       image:
         repository: bmwreferencerepository.azurecr.io/angular-reservation-ui
