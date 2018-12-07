@@ -19,7 +19,6 @@ spec:
           image:
             repository: {{ .Values.angular.image.repository }}
             tag: {{ .Values.angular.image.tag }}
-          image: 
           ports:
           - containerPort: {{ .Values.angular.port | default 80 }}
           env:
