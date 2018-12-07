@@ -10,12 +10,12 @@ spec:
   tls:
   - hosts:
     - bmw-ref-arch.eastus.cloudapp.azure.com
-    secretName: tls-secret
+    secretName: {{ .Values.ingress.secretName }}
   rules:
   - host: bmw-ref-arch.eastus.cloudapp.azure.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: angular-reservation-ui
+          serviceName: {{ .Values.angular.appName }}
           servicePort: 80

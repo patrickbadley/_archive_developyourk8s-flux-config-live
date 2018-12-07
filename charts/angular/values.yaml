@@ -11,3 +11,6 @@ api:
   image: <from-release>
   port: 80
   type: LoadBalancer
+
+ingress:
+  secretName: tls-secret
