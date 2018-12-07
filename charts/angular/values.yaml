@@ -4,13 +4,13 @@ angular:
   appName: angular-ui
   image: <from-release>
   port: 4200
-  type: LoadBalancer
+  type: ClusterIP
 
 api:
   appName: api
   image: <from-release>
   port: 80
-  type: LoadBalancer
+  type: ClusterIP
 
 ingress:
   secretName: tls-secret
