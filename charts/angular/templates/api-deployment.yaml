@@ -16,7 +16,9 @@ spec:
     spec:
       containers:
         - name: {{ .Values.api.appName }}
-          image: "{{ .Values.api.image }}"
+          image:
+            repository: {{ .Values.api.image.repository }}
+            tag: {{ .Values.api.image.tag }}
           ports:
           - containerPort: {{ .Values.api.port | default 80 }}
           env:
