@@ -47,7 +47,7 @@ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
 helm install     --name cert-manager     --namespace kube-system     stable/cert-manager
 ```
 12. Fork github.com/patrickbadley/simple-flux and update any references to your images/repositories/servername
-12. (a). If using a private container registry: Get credentials to your azure container registry
+13. (optional) If using a private container registry: Get credentials to your azure container registry
 ```bash
 ACR_NAME=bmwreferencerepository
 SERVICE_PRINCIPAL_NAME=acr-service-principal
@@ -57,20 +57,20 @@ SP_PASSWD=$(az ad sp create-for-rbac --name $SERVICE_PRINCIPAL_NAME --role Reade
 CLIENT_ID=$(az ad sp show --id http://$SERVICE_PRINCIPAL_NAME --query appId --output tsv)
 kubectl create secret docker-registry azure-reg-creds --docker-server $ACR_NAME.azurecr.io --docker-username $CLIENT_ID --docker-password $SP_PASSWD --docker-email myemail@email.com
 ```
-13. Add flux helm chart repository
+14. Add flux helm chart repository
 ```bash
 helm repo add weaveworks https://weaveworks.github.io/flux
 ```
-14. Install flux using helm and passing in your config repository url (fork mine and update the image locations as needed first)
+15. Install flux using helm and passing in your config repository url (fork mine and update the image locations as needed first)
 ```bash
 helm install --name flux --set rbac.create=true --set helmOperator.create=true --set git.url=ssh://git@github.com/patrickbadley/simple-flux --set git.pollInterval=1m --namespace flux weaveworks/flux
 ```
-15. Get flux's ssh key that it will use to authenticate with your git repository
+16. Get flux's ssh key that it will use to authenticate with your git repository
 ```bash
 kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2
 ```
-15. Add the printed key to your git repositories Deploy keys with Write access
-16. Monitor the helm operator pod, all your pods, and helm releases until they get spun up and then navigate to the url above!
+17. Add the printed key to your git repositories Deploy keys with Write access
+18. Monitor the helm operator pod, all your pods, and helm releases until they get spun up and then navigate to the url above!
 ```bash
 kubectl logs --selector=app=flux-helm-operator -n flux
 ```
@@ -80,7 +80,7 @@ kubectl get pods --all-namespaces
 ```bash
 helm list
 ```
-17. Update your Cert-manager installation with the cluster issuer created by your flux release:
+19. Update your Cert-manager installation with the cluster issuer created by your flux release:
 ```bash
 helm upgrade cert-manager     stable/cert-manager     --namespace kube-system     --set ingressShim.defaultIssuerName=letsencrypt-prod --set ingressShim.defaultIssuerKind=ClusterIssuer
 ```
