@@ -46,7 +46,17 @@ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
 ```bash
 helm install     --name cert-manager     --namespace kube-system     stable/cert-manager
 ```
-12. Fork github.com/patrickbadley/simple-flux and update any references to your images/repositories
+12. Fork github.com/patrickbadley/simple-flux and update any references to your images/repositories/servername
+12 (a). If using a private container registry: Get credentials to your azure container registry
+```bash
+ACR_NAME=bmwreferencerepository
+SERVICE_PRINCIPAL_NAME=acr-service-principal
+ACR_LOGIN_SERVER=$(az acr show --name $ACR_NAME --query loginServer --output tsv)
+ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query id --output tsv)
+SP_PASSWD=$(az ad sp create-for-rbac --name $SERVICE_PRINCIPAL_NAME --role Reader --scopes $ACR_REGISTRY_ID --query password --output tsv)
+CLIENT_ID=$(az ad sp show --id http://$SERVICE_PRINCIPAL_NAME --query appId --output tsv)
+kubectl create secret docker-registry azure-reg-creds --docker-server $ACR_NAME.azurecr.io --docker-username $CLIENT_ID --docker-password $SP_PASSWD --docker-email myemail@email.com
+```
 13. Add flux helm chart repository
 ```bash
 helm repo add weaveworks https://weaveworks.github.io/flux
@@ -74,7 +84,7 @@ helm list
 ```bash
 helm upgrade cert-manager     stable/cert-manager     --namespace kube-system     --set ingressShim.defaultIssuerName=letsencrypt-prod --set ingressShim.defaultIssuerKind=ClusterIssuer
 ```
-	
+
 ### References: ###
 1. https://github.com/stefanprodan/gitops-helm
 2. https://docs.microsoft.com/en-us/azure/aks/ingress-tls
