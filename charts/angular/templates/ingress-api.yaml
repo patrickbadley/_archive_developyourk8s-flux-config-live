@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - bmw-ref-arch.eastus.cloudapp.azure.com
+    - {{ .Values.ingress.hostName }}
     secretName: {{ .Values.ingress.secretName }}
   rules:
-  - host: bmw-ref-arch.eastus.cloudapp.azure.com
+  - host: {{ .Values.ingress.hostName }}
     http:
       paths:
       - path: /api
