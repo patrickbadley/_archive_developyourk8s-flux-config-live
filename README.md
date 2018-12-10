@@ -17,22 +17,13 @@ kubectl create clusterrolebinding tiller-cluster-rule \
 ```bash
 helm init --skip-refresh --upgrade --service-account tiller
 ```
-4. Download Istio: (more info at: https://istio.io/docs/setup/kubernetes/download-release/)
+4. Install nginx ingress controller
 ```bash
-curl -L https://git.io/getLatestIstio | sh -
-cd istio-1.0.4
+helm install stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --name=nginx-ingress
 ```
-5. Install Istio
+5. Get ip address of ingress controller: (under External Ip Column)
 ```bash
-helm install install/kubernetes/helm/istio --name istio --namespace istio-system \
-	--set grafana.enabled=true \
-	--set servicegraph.enabled=true \
-	--set tracing.enabled=true \
-	--set global.mtls.enabled=true
-```
-5. Get ip address of ingress gateway: (under External Ip Column)
-```bash
-IP=$(kubectl describe svc istio-ingressgateway -n istio-system | grep "LoadBalancer Ingress:   " | cut -d':' -f 2 | tr -d ' ')
+IP=$(kubectl describe svc nginx-ingress-controller -n kube-system | grep "LoadBalancer Ingress:   " | cut -d':' -f 2 | tr -d ' ')
 ```
 6. Verify the Public IP address of your ingress controller was ready (if it says <pending> run the previous command again)
 ```bash
@@ -40,7 +31,7 @@ echo $IP
 ```
 7. Save a friendly host name for your cluster components
 ```bash
-DNSNAME="bmw-ref-arch"
+DNSNAME="bmw-ref-arch-simple"
 ```
 8. Get the azure resource-id of the public ip
 ```bash
@@ -50,31 +41,21 @@ PUBLICIPID=$(az network public-ip list --query "[?ipAddress!=null]|[?contains(ip
 ```bash
 az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
 ```
-10. Generate a TLS Certificate for the fully qualified hostname you created above and store the key and value in a kubernetes secret (name and namespace below are important):
-```yaml
-apiVersion: v1
-data:
-  tls.crt: <insert your tls certificate here>
-  tls.key: <insert your tls certificate key here>
-kind: Secret
-metadata:
-  name: istio-ingressgateway-certs
-  namespace: istio-system
-type: kubernetes.io/tls
+10. Navigate to http://bmw-ref-arch-simple.eastus.cloudapp.azure.com/ and you should see "default backend - 404"
+11. Install Cert-Manager
+```bash
+helm install     --name cert-manager     --namespace kube-system     stable/cert-manager
 ```
-11. Fork github.com/patrickbadley/microservice-reference-architecture-config-istio and update the following files:  
-  a. \charts\ingress-management\values.yaml (domainName and contactEmail)  
-  b. \releases\\{dev/stg/prod}\order-workflow\values.yaml (image dockerhub repositories)  
-  c. \releases\\{dev/stg/prod}\values.yaml (image dockerhub repositories)
-12. Add flux helm chart repository
+12. Fork github.com/patrickbadley/simple-flux and update any references to your images/repositories
+13. Add flux helm chart repository
 ```bash
 helm repo add weaveworks https://weaveworks.github.io/flux
 ```
-13. Install flux using helm and passing in your config repository url (fork mine and update the image locations as needed first)
+14. Install flux using helm and passing in your config repository url (fork mine and update the image locations as needed first)
 ```bash
-helm install --name flux --set rbac.create=true --set helmOperator.create=true --set git.url=ssh://git@github.com/patrickbadley/microservice-reference-architecture-config-istio --set git.pollInterval=1m --namespace flux weaveworks/flux
+helm install --name flux --set rbac.create=true --set helmOperator.create=true --set git.url=ssh://git@github.com/patrickbadley/simple-flux --set git.pollInterval=1m --namespace flux weaveworks/flux
 ```
-14. Get flux's ssh key that it will use to authenticate with your git repository
+15. Get flux's ssh key that it will use to authenticate with your git repository
 ```bash
 kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2
 ```
@@ -88,6 +69,10 @@ kubectl get pods --all-namespaces
 ```
 ```bash
 helm list
+```
+17. Update your Cert-manager installation with the cluster issuer created by your flux release:
+```bash
+helm upgrade cert-manager     stable/cert-manager     --namespace kube-system     --set ingressShim.defaultIssuerName=letsencrypt-prod --set ingressShim.defaultIssuerKind=ClusterIssuer
 ```
 	
 ### References: ###
