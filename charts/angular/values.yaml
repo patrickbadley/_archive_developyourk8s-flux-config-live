@@ -13,6 +13,6 @@ api:
   type: ClusterIP
 
 ingress:
-  secretName: tls-secret
+  secretName: tls-secret2
   hostName: bmw-ref-arch-simple.eastus.cloudapp.azure.com
   certificateOwnerEmail: pjb2@hmbnet.com
