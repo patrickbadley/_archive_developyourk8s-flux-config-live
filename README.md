@@ -46,7 +46,7 @@ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
 ```bash
 helm install     --name cert-manager     --namespace kube-system     stable/cert-manager
 ```
-12. Fork github.com/patrickbadley/simple-flux and update any references to your images/repositories/servername 
+12. Fork github.com/patrickbadley/simple-flux and update any references to your images/repositories/servername
 12 (a). If using a private container registry: Get credentials to your azure container registry
 ```bash
 ACR_NAME=bmwreferencerepository
