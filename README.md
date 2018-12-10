@@ -46,10 +46,7 @@ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
 ```bash
 helm install     --name cert-manager     --namespace kube-system     stable/cert-manager
 ```
-12. Fork github.com/patrickbadley/microservice-reference-architecture-config-istio and update the following files:  
-  a. \charts\ingress-management\values.yaml (domainName and contactEmail)  
-  b. \releases\\{dev/stg/prod}\order-workflow\values.yaml (image dockerhub repositories)  
-  c. \releases\\{dev/stg/prod}\values.yaml (image dockerhub repositories)
+12. Fork github.com/patrickbadley/simple-flux and update any references to your images/repositories
 13. Add flux helm chart repository
 ```bash
 helm repo add weaveworks https://weaveworks.github.io/flux
