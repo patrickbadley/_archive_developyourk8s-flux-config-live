@@ -18,8 +18,8 @@ spec:
 
     angular:
       replicaCount: 1
-      image: devopsteam.azurecr.io/angularfrontend:3183
+      image: hmbdevopsteam.azurecr.io/angularfrontend:3187
 
     api:
       replicaCount: 1
-      image: devopsteam.azurecr.io/webapibackend:3185
+      image: hmbdevopsteam.azurecr.io/webapibackend:3186

@@ -21,4 +21,4 @@ spec:
       - path: /api
         backend:
           serviceName: {{ .Values.api.appName }}
-          servicePort: 443
+          servicePort: 80
