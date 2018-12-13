@@ -6,11 +6,11 @@ metadata:
   namespace: default
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.angular: glob:local-1.0.*
-    flux.weave.works/tag.api: glob:local-1.0.*
+    flux.weave.works/tag.angular: glob:*
+    flux.weave.works/tag.api: glob:*
 spec:
   chart:
-    git: git@github.com:patrickbadley/simple-flux.git
+    git: git@github.com:patrickbadley/devops-team-flux-config.git
     path: charts/angular
   releaseName: angular
   values:
@@ -18,8 +18,8 @@ spec:
 
     angular:
       replicaCount: 1
-      image: bmwreferencerepository.azurecr.io/simple-values-ui:local-1.0.1
+      image: devopsteam.azurecr.io/angularfrontend:3183
 
     api:
       replicaCount: 1
-      image: bmwreferencerepository.azurecr.io/simple-values-api:local-1.0.1
+      image: devopsteam.azurecr.io/webapibackend:3185
