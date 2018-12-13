@@ -19,7 +19,7 @@ helm init --skip-refresh --upgrade --service-account tiller
 ```
 4. Install nginx ingress controller
 ```bash
-helm install stable/nginx-ingress --namespace kube-system --set controller.replicaCount=2 --name=nginx-ingress
+helm install stable/nginx-ingress --namespace kube-system --name=nginx-ingress
 ```
 5. Get ip address of ingress controller: (under External Ip Column)
 ```bash
@@ -31,7 +31,7 @@ echo $IP
 ```
 7. Save a friendly host name for your cluster components
 ```bash
-DNSNAME="bmw-ref-arch-simple"
+DNSNAME="hmb-dev-ops-app-dev"
 ```
 8. Get the azure resource-id of the public ip
 ```bash
@@ -44,18 +44,18 @@ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
 10. Navigate to http://bmw-ref-arch-simple.eastus.cloudapp.azure.com/ and you should see "default backend - 404"
 11. Install Cert-Manager
 ```bash
-helm install     --name cert-manager     --namespace kube-system     stable/cert-manager
+helm install --name cert-manager --namespace kube-system stable/cert-manager
 ```
-12. Fork github.com/patrickbadley/simple-flux and update any references to your images/repositories/servername
+12. Fork github.com/patrickbadley/devops-team-flux-config and update any references to your images/repositories/servername
 13. (optional) If using a private container registry: Get credentials to your azure container registry
 ```bash
-ACR_NAME=bmwreferencerepository
+ACR_NAME=hmbdevopsteam
 SERVICE_PRINCIPAL_NAME=acr-service-principal
 ACR_LOGIN_SERVER=$(az acr show --name $ACR_NAME --query loginServer --output tsv)
 ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query id --output tsv)
 SP_PASSWD=$(az ad sp create-for-rbac --name $SERVICE_PRINCIPAL_NAME --role Reader --scopes $ACR_REGISTRY_ID --query password --output tsv)
 CLIENT_ID=$(az ad sp show --id http://$SERVICE_PRINCIPAL_NAME --query appId --output tsv)
-kubectl create secret docker-registry azure-reg-creds --docker-server $ACR_NAME.azurecr.io --docker-username $CLIENT_ID --docker-password $SP_PASSWD --docker-email myemail@email.com
+kubectl create secret docker-registry azure-reg-creds --docker-server $ACR_NAME.azurecr.io --docker-username $CLIENT_ID --docker-password $SP_PASSWD --docker-email pjb2@hmbnet.com
 ```
 14. Add flux helm chart repository
 ```bash
