@@ -63,7 +63,7 @@ helm repo add weaveworks https://weaveworks.github.io/flux
 ```
 15. Install flux using helm and passing in your config repository url (fork mine and update the image locations as needed first)
 ```bash
-helm install --name flux --set rbac.create=true --set helmOperator.create=true --set git.url=ssh://git@github.com/patrickbadley/simple-flux --set git.pollInterval=1m --namespace flux weaveworks/flux
+helm install --name flux --set rbac.create=true --set helmOperator.create=true --set git.url=ssh://git@github.com/patrickbadley/devops-team-flux-config  --namespace flux weaveworks/flux
 ```
 16. Get flux's ssh key that it will use to authenticate with your git repository
 ```bash
