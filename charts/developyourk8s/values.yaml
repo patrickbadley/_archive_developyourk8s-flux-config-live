@@ -5,16 +5,10 @@ angular:
   port: 4200
   type: ClusterIP
   configMapName: angular-config-json
-  image:
-    repository: patrickbadley/angularfrontend
-    tag: 3367
-    pullPolicy: Always
+  image: patrickbadley/angularfrontend:367
 
 api:
   appName: api
   port: 80
   type: ClusterIP
-  image: 
-    repository: patrickbadley/webapibackend
-    tag: 3367
-    pullPolicy: Always
+  image: patrickbadley/webapibackend:3367
