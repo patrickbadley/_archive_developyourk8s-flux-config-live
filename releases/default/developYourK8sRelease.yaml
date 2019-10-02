@@ -11,8 +11,8 @@ metadata:
 spec:
   chart:
     git: git@github.com:patrickbadley/developyourk8s-flux-config.git
-    path: charts/developyourk8srelease
-  releaseName: developyourk8srelease
+    path: charts/developyourk8s
+  releaseName: developyourk8s
   values:
     environment: default
 
