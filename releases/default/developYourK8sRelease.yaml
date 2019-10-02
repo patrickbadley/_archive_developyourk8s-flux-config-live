@@ -1,0 +1,25 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: developyourk8srelease
+  namespace: default
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.angularfrontend: glob:*
+    flux.weave.works/tag.api: glob:*
+spec:
+  chart:
+    git: git@github.com:patrickbadley/developyourk8s-flux-config.git
+    path: charts/developyourk8srelease
+  releaseName: developyourk8srelease
+  values:
+    environment: default
+
+    angularfrontend:
+      replicaCount: 1
+      image: patrickbadley/angularfrontend:196
+
+    webapibackend:
+      replicaCount: 1
+      image: patrickbadley/webapibackend:197

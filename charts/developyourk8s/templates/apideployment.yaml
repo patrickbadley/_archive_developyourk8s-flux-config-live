@@ -5,7 +5,7 @@ metadata:
   labels:
     app: {{ .Values.api.appName }}
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: {{ .Values.api.appName }}
@@ -16,11 +16,10 @@ spec:
     spec:
       containers:
         - name: {{ .Values.api.appName }}
-          image: {{ .Values.api.image }}
+          image: "{{ .Valuesapi.image.repository }}:{{ .Valuesapi.image.tag }}"
+          imagePullPolicy: {{ .Valuesapi.image.pullPolicy }}
           ports:
           - containerPort: {{ .Values.api.port | default 80 }}
           env:
           - name: APP_ENVIRONMENT
             value: {{ .Values.environment }}
-      imagePullSecrets:
-      - name: azure-reg-creds

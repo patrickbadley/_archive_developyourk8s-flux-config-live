@@ -1,0 +1,20 @@
+# Default values for application.
+environment: dev
+angular:
+  appName: angular
+  port: 4200
+  type: ClusterIP
+  configMapName: angular-config-json
+  image:
+    repository: patrickbadley/angularfrontend
+    tag: 3367
+    pullPolicy: Always
+
+api:
+  appName: api
+  port: 80
+  type: ClusterIP
+  image: 
+    repository: patrickbadley/webapibackend
+    tag: 3367
+    pullPolicy: Always
