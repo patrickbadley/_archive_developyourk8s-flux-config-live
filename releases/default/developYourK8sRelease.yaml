@@ -6,7 +6,7 @@ metadata:
   namespace: default
   annotations:
     flux.weave.works/automated: "true"
-    flux.weave.works/tag.angularfrontend: glob:*
+    flux.weave.works/tag.angular: glob:*
     flux.weave.works/tag.api: glob:*
 spec:
   chart:
@@ -22,4 +22,4 @@ spec:
 
     api:
       replicaCount: 1
-      image: patrickbadley/webapibackend:197
+      image: patrickbadley/webapibackend:204
