@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: {{ .Values.angular.appName }}
-          image: "{{ .Values.angular.image.repository }}:{{ .Values.angular.image.tag }}"
-          imagePullPolicy: {{ .Values.angular.image.pullPolicy }}
+          image: "{{ .Values.angular.image }}"
+          imagePullPolicy: Always
           ports:
           - containerPort: {{ .Values.angular.port | default 80 }}
           env:
