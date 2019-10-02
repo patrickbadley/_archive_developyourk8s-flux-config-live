@@ -16,10 +16,10 @@ spec:
   values:
     environment: default
 
-    angularfrontend:
+    angular:
       replicaCount: 1
       image: patrickbadley/angularfrontend:196
 
-    webapibackend:
+    api:
       replicaCount: 1
       image: patrickbadley/webapibackend:197
