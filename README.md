@@ -34,11 +34,43 @@ az network public-ip update --ids $PUBLICIPID --dns-name $DNSNAME
 
 helm install --name cert-manager --namespace kube-system stable/cert-manager
 ```
-5. At this point you should be able to visit http://developyourk8s.eastus.cloudapp.azure.com/ and see "no backend"
+5. At this point you should be able to visit http://developyourk8s.eastus.cloudapp.azure.com/ and see "default backend - 404"
 6. Now we'll install flux and connect it to our configuration repository
 ```bash
-IP=$(kubectl describe svc nginx-ingress-controller -n kube-system | grep "LoadBalancer Ingress:   " | cut -d':' -f 2 | tr -d ' ')
+helm repo add fluxcd https://charts.fluxcd.io
+
+kubectl apply -f https://raw.githubusercontent.com/fluxcd/flux/helm-0.10.1/deploy-helm/flux-helm-release-crd.yaml
+
+helm upgrade -i flux \
+--set helmOperator.create=true \
+--set helmOperator.createCRD=false \
+--set git.url=git@github.com:patrickbadley/developyourk8s-flux-config.git \
+--set git-poll-interval=1m \
+--set git.pollInterval="30s" \
+--set sync-interval=1m \
+--namespace flux \
+fluxcd/flux
 ```
+7. Flux generates a ssh key we can use to authorize it to connect to our git repo let retreive it first (if your result isnt a long string starting with ssh-rsa, try again until you get one)
+```bash
+kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2
+```
+8. Copy the result
+9. Fork this repo (you will need to update references to the repository name in releases/default/developYourK8sRelease.yaml)
+10. Add a github deploy key to your new repo
+  a. Under Settings, choose deploy keys
+  b. Click Add 
+  c. Name it "flux" and paste the value in the box
+  d. Check the box to allow write access
+  e. Click Add key
+11. Flux will now configure your cluster!
+12. One last piece is to configure cert-manager, a tool that manges ssl certificates for us
+```bash
+helm upgrade cert-manager     stable/cert-manager     --namespace kube-system     --set ingressShim.defaultIssuerName=letsencrypt-prod --set ingressShim.defaultIssuerKind=ClusterIssuer
+```
+13. Now go to https://developyourk8s.eastus.cloudapp.azure.com/ and see your app running!
+
+
 
 ### References: ###
 1. https://github.com/stefanprodan/gitops-helm
