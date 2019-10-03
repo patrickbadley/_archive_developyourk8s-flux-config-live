@@ -18,3 +18,8 @@ api:
     repository: patrickbadley/webapibackend
     tag: 3367
     pullPolicy: Always
+
+ingress:
+  secretName: tls-secret
+  hostName: developyourk8s.eastus.cloudapp.azure.com
+  certificateOwnerEmail: pjb2@hmbnet.com

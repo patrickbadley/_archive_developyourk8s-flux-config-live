@@ -1,0 +1,31 @@
+
+ az aks get-credentials --resource-group developtake4  --name developtake4
+
+ kubectl -n kube-system create sa tiller
+
+ kubectl create clusterrolebinding tiller-cluster-rule \
+ --clusterrole=cluster-admin \
+ --serviceaccount=kube-system:tiller
+
+ helm init --skip-refresh --upgrade --service-account tiller
+
+ helm repo add fluxcd https://charts.fluxcd.io
+
+ kubectl apply -f https://raw.githubusercontent.com/fluxcd/flux/helm-0.10.1/deploy-helm/flux-helm-release-crd.yaml
+
+helm upgrade -i flux \
+--set helmOperator.create=true \
+--set helmOperator.createCRD=false \
+--set git.url=git@github.com:patrickbadley/developyourk8s-flux-config.git \
+--namespace flux \
+fluxcd/flux
+
+kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2
+
+kubectl -n flux logs deployment/flux -f
+
+kubectl -n flux logs deployment/flux-helm-operator -f
+
+error:
+ts=2019-10-02T02:14:06.88600674Z caller=release.go:215 component=release error="Chart release failed: developyourk8s: &status.statusError{Code:2, Message:\"render error in \\\"developyourk8srelease/templates/apideployment.yaml\\\": template: developyourk8srelease/templates/apideployment.yaml:19:28: executing \\\"developyourk8srelease/templates/apideployment.yaml\\\" at <.Values.api.image.repository>: can't evaluate field repository in type interface {}\", Details:[]*any.Any(nil), XXX_NoUnkeyedLiteral:struct {}{}, XXX_unrecognized:[]uint8(nil), XXX_sizecache:0}"
+ts=2019-10-02T02:14:06.921735086Z caller=chartsync.go:358 component=chartsync warning="failed to install chart" resource=default:helmrelease/developyourk8srelease err="rpc error: code = Unknown desc = release: \"developyourk8s\" not found"
