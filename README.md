@@ -51,18 +51,18 @@ helm upgrade -i flux \
 --namespace flux \
 fluxcd/flux
 ```
-7. Flux generates a ssh key we can use to authorize it to connect to our git repo let retreive it first (if your result isnt a long string starting with ssh-rsa, try again until you get one)
+7. Flux generates a ssh key we can use to authorize it to connect to our git repo. Let's retrieve it first (if your result isnt a long string starting with ssh-rsa, try again until you get one)
 ```bash
 kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2
 ```
 8. Copy the result
 9. Fork this repo (you will need to update references to the repository name in releases/default/developYourK8sRelease.yaml)
-10. Add a github deploy key to your new repo
-  a. Under Settings, choose deploy keys
-  b. Click Add 
-  c. Name it "flux" and paste the value in the box
-  d. Check the box to allow write access
-  e. Click Add key
+10. Add a github deploy key to your new repo  
+  a. Under Settings, choose deploy keys  
+  b. Click Add   
+  c. Name it "flux" and paste the value in the box  
+  d. Check the box to allow write access  
+  e. Click Add key  
 11. Flux will now configure your cluster!
 12. One last piece is to configure cert-manager, a tool that manges ssl certificates for us
 ```bash
