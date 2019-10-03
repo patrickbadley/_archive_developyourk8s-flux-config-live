@@ -23,12 +23,12 @@ spec:
           env:
           - name: APP_ENVIRONMENT
             value: {{ .Values.environment }}
-#          volumeMounts:
-#            - name: {{ .Values.angular.configMapName }}
-#              mountPath: "/usr/src/app/src/assets/config"
-#              readOnly: true
-#      volumes:
-#        - name: {{ .Values.angular.configMapName }}
-#          configMap:
-#            name: {{ .Values.angular.configMapName }}
-#            optional: true
+          volumeMounts:
+            - name: {{ .Values.angular.configMapName }}
+              mountPath: "/usr/src/app/src/assets/config"
+              readOnly: true
+      volumes:
+        - name: {{ .Values.angular.configMapName }}
+          configMap:
+            name: {{ .Values.angular.configMapName }}
+            optional: true
