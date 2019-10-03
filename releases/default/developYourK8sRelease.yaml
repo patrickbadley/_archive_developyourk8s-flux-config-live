@@ -18,7 +18,7 @@ spec:
 
     angular:
       replicaCount: 1
-      image: patrickbadley/angularfrontend:196
+      image: patrickbadley/angularfrontend:205
 
     api:
       replicaCount: 1
