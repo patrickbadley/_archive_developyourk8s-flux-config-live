@@ -22,7 +22,7 @@ spec:
 
     api:
       replicaCount: 1
-      image: patrickbadley/webapibackend:206
+      image: patrickbadley/webapibackend:207
 
     features:
       mapEnabled: false
