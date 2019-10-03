@@ -64,7 +64,7 @@ kubectl -n flux logs deployment/flux | grep identity.pub | cut -d '"' -f2
   d. Check the box to allow write access  
   e. Click Add key  
 11. Flux will now configure your cluster!
-12. One last piece is to configure cert-manager, a tool that manges ssl certificates for us
+12. One last piece is to configure cert-manager, a tool that manages ssl certificates for us
 ```bash
 helm upgrade cert-manager     stable/cert-manager     --namespace kube-system     --set ingressShim.defaultIssuerName=letsencrypt-prod --set ingressShim.defaultIssuerKind=ClusterIssuer
 ```
