@@ -15,7 +15,7 @@ api:
 
 ingress:
   secretName: tls-secret
-  hostName: developyourk8s.eastus.cloudapp.azure.com
+  hostName: developyourk8slive.southcentralus.cloudapp.azure.com
   certificateOwnerEmail: pjb2@hmbnet.com
 
 features:
