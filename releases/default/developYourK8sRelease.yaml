@@ -10,7 +10,7 @@ metadata:
     flux.weave.works/tag.api: glob:*
 spec:
   chart:
-    git: git@github.com:patrickbadley/developyourk8s-flux-config.git
+    git: git@github.com:patrickbadley/developyourk8s-flux-config-live.git
     path: charts/developyourk8s
   releaseName: developyourk8s
   values:
