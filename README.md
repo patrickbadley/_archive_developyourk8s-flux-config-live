@@ -44,7 +44,7 @@ kubectl apply -f https://raw.githubusercontent.com/fluxcd/flux/helm-0.10.1/deplo
 helm upgrade -i flux \
 --set helmOperator.create=true \
 --set helmOperator.createCRD=false \
---set git.url=git@github.com:patrickbadley/developyourk8slive-flux-config.git \
+--set git.url=git@github.com:patrickbadley/developyourk8s-flux-config-live.git \
 --set git.pollInterval="10s" \
 --namespace flux \
 fluxcd/flux
