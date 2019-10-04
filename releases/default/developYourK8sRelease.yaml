@@ -25,4 +25,4 @@ spec:
       image: patrickbadley/webapibackend:2.0.2
 
     features:
-      mapEnabled: true
+      mapEnabled: false
